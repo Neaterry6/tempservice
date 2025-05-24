@@ -27,8 +27,8 @@
     <div id="numberDisplay"></div>
     <div id="emailDisplay"></div>
     
-    <button onclick="loadInbox()">Inbox</button>
-    <div id="inboxMessages" class="hidden"></div>
+    <br>
+    <a href="/inbox" class="link">📩 Check Your Inbox</a>
 </div>
 
 <script>
@@ -39,20 +39,6 @@ function generate() {
         .then(data => {
             document.getElementById("numberDisplay").innerHTML = `<h3>Temp Number:</h3><p>${data.phone}</p>`;
             document.getElementById("emailDisplay").innerHTML = `<h3>Temp Email:</h3><p>${data.email}</p>`;
-        })
-        .catch(console.error);
-}
-
-function loadInbox() {
-    fetch("/inbox")
-        .then(res => res.json())
-        .then(data => {
-            const inboxDiv = document.getElementById("inboxMessages");
-            inboxDiv.classList.remove("hidden");
-            inboxDiv.innerHTML = `<h3>Inbox Messages</h3>`;
-            data.messages.forEach(msg => {
-                inboxDiv.innerHTML += `<p><strong>Message:</strong> ${msg}</p><hr>`;
-            });
         })
         .catch(console.error);
 }
