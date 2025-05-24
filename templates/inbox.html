@@ -2,13 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Inbox Messages</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titan Tools - Inbox</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Inbox Messages</h1>
+
+<h1>Inbox Messages</h1>
+
+<div class="container" id="inboxMessages">
     {% for msg in messages %}
-        <p>{{ msg }}</p>
+        <p><strong>Message:</strong> {{ msg }}</p>
+        <hr>
     {% endfor %}
+</div>
+
+<button onclick="goBack()">Back to Generator</button>
+
+<script>
+function goBack() {
+    window.location.href = "/";
+}
+</script>
+
 </body>
 </html>
