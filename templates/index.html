@@ -7,16 +7,28 @@
 </head>
 <body>
     <h1>Your Temporary Email & Phone Number</h1>
-    <p>Email: {{ email }}</p>
-    <p>Phone Number: {{ phone }}</p>
+    
+    <form method="POST">
+        <label for="country">Select Country:</label>
+        <select name="country">
+            <option value="Nigeria">Nigeria (+234)</option>
+            <option value="USA">USA (+1)</option>
+            <option value="UK">UK (+44)</option>
+            <option value="Canada">Canada (+1)</option>
+            <option value="India">India (+91)</option>
+        </select>
 
-    <h2>Send a Message</h2>
-    <form method="POST" action="/send">
-        <input type="text" name="message" placeholder="Enter message">
-        <button type="submit">Send</button>
+        <button type="submit">Generate</button>
     </form>
 
-    <br>
+    {% if email and phone %}
+    <div>
+        <h2>Your Temporary Info</h2>
+        <p>Email: {{ email }}</p>
+        <p>Phone: {{ phone }}</p>
+    </div>
+    {% endif %}
+
     <a href="/inbox">Check Inbox</a>
 </body>
 </html>
