@@ -13,5 +13,4 @@ def generate_temp_number(country):
     """Generate a temporary phone number based on the selected country."""
     if country in COUNTRY_CODES:
         return f"{COUNTRY_CODES[country]}{random.randint(1000000000, 9999999999)}"
-    else:
-        return "Invalid country selected!"
+    return "Invalid country selected!"
