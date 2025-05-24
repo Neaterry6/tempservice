@@ -1,8 +1,10 @@
-import random
-import string
+import requests
+
+TEMP_MAIL_API = "https://api.temp-mail.org/request/new/temp-mail"
 
 def generate_temp_email():
-    """Generate a temporary email address."""
-    domains = ["tempmail.com", "guerrillamail.com", "mailinator.com"]
-    username = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
-    return f"{username}@{random.choice(domains)}"
+    """Fetch a new temporary email from the TempMail API."""
+    response = requests.get(TEMP_MAIL_API)
+    if response.status_code == 200:
+        return response.json().get("email")
+    return "Failed to generate email"
