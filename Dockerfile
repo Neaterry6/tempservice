@@ -14,4 +14,4 @@ RUN pip install --upgrade pip && pip install flask requests gunicorn
 EXPOSE 5000
 
 # Start the app
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"] 
