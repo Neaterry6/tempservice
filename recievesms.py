@@ -1,4 +1,3 @@
-
 import requests
 
 RECEIVESMS_API_URL = "https://receive-smss.com/free-phone-number"
