@@ -5,13 +5,13 @@ FROM python:3.9
 # Set the working directory
 WORKDIR /app
 
-# Copy app files
+# Copy all project files
 COPY . .
 
 # Install dependencies
 RUN pip install -r requirements.txt
 
-# Expose the port Flask runs on
+# Expose the Flask port
 EXPOSE 5000
 
 # Start the app
