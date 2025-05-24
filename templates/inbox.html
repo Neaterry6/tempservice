@@ -1,1 +1,14 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inbox Messages</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Inbox Messages</h1>
+    {% for msg in messages %}
+        <p>{{ msg }}</p>
+    {% endfor %}
+</body>
+</html>
