@@ -16,4 +16,4 @@ def receive_sms(number):
     response = requests.get(inbox_api_url)
     if response.status_code == 200:
         return response.json().get("messages", [])
-    return "Failed to fetch messages" 
+    return "Failed to fetch messages"  
