@@ -3,42 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Titan Tools - TempGen</title>
+    <title>Free Temp Number & Email Generator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<h1>Titan Tools</h1>
+<h1>Free Temp Number & Email Service</h1>
 
 <div class="container">
-    <h2>Generate Temporary Email & Phone Number</h2>
-
-    <label>Select Country:</label>
-    <select id="country">
-        <option value="Nigeria">Nigeria (+234)</option>
-        <option value="USA">USA (+1)</option>
-        <option value="UK">UK (+44)</option>
-        <option value="Canada">Canada (+1)</option>
-        <option value="India">India (+91)</option>
-    </select>
-
-    <button onclick="generate()">Generate</button>
-    
+    <h2>Generate a Temporary Phone Number</h2>
+    <button onclick="generateNumber()">Generate Number</button>
     <div id="numberDisplay"></div>
-    <div id="emailDisplay"></div>
     
     <br>
-    <a href="/inbox" class="link">📩 Check Your Inbox</a>
+    <button onclick="loadSmsInbox()">📩 Check SMS Inbox</button>
+    <div id="smsInbox" class="hidden"></div>
+</div>
+
+<hr>
+
+<div class="container">
+    <h2>Generate a Temporary Email</h2>
+    <button onclick="generateEmail()">Generate Email</button>
+    <div id="emailDisplay"></div>
+
+    <br>
+    <button onclick="loadEmailInbox()">📩 Check Email Inbox</button>
+    <div id="emailInbox" class="hidden"></div>
 </div>
 
 <script>
-function generate() {
-    const country = document.getElementById("country").value;
-    fetch(`/generate?country=${country}`)
+function generateNumber() {
+    fetch("/generate_number")
         .then(res => res.json())
         .then(data => {
-            document.getElementById("numberDisplay").innerHTML = `<h3>Temp Number:</h3><p>${data.phone}</p>`;
+            document.getElementById("numberDisplay").innerHTML = `<h3>Temp Phone Number:</h3><p>${data.phone}</p>`;
+            localStorage.setItem("temp_phone", data.phone); // Store number for inbox
+        })
+        .catch(console.error);
+}
+
+function loadSmsInbox() {
+    const tempPhone = localStorage.getItem("temp_phone");
+    if (!tempPhone) {
+        alert("You must generate a number first!");
+        return;
+    }
+    fetch(`/inbox?number=${tempPhone}`)
+        .then(res => res.json())
+        .then(data => {
+            const inboxDiv = document.getElementById("smsInbox");
+            inboxDiv.classList.remove("hidden");
+            inboxDiv.innerHTML = `<h3>SMS Inbox</h3>`;
+            data.forEach(msg => {
+                inboxDiv.innerHTML += `<p><strong>Message:</strong> ${msg}</p><hr>`;
+            });
+        })
+        .catch(console.error);
+}
+
+function generateEmail() {
+    fetch("/generate_email")
+        .then(res => res.json())
+        .then(data => {
             document.getElementById("emailDisplay").innerHTML = `<h3>Temp Email:</h3><p>${data.email}</p>`;
+            localStorage.setItem("temp_email", data.email); // Store email for inbox
+        })
+        .catch(console.error);
+}
+
+function loadEmailInbox() {
+    const tempEmail = localStorage.getItem("temp_email");
+    if (!tempEmail) {
+        alert("You must generate an email first!");
+        return;
+    }
+    fetch(`/email_inbox?email=${tempEmail}`)
+        .then(res => res.json())
+        .then(data => {
+            const inboxDiv = document.getElementById("emailInbox");
+            inboxDiv.classList.remove("hidden");
+            inboxDiv.innerHTML = `<h3>Email Inbox</h3>`;
+            data.forEach(msg => {
+                inboxDiv.innerHTML += `<p><strong>Message:</strong> ${msg}</p><hr>`;
+            });
         })
         .catch(console.error);
 }
