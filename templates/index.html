@@ -2,33 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Temp Email & Number Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titan Tools - TempGen</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Your Temporary Email & Phone Number</h1>
+
+<h1>Titan Tools</h1>
+
+<div class="container">
+    <h2>Generate Temporary Email & Phone Number</h2>
+
+    <label>Select Country:</label>
+    <select id="country">
+        <option value="Nigeria">Nigeria (+234)</option>
+        <option value="USA">USA (+1)</option>
+        <option value="UK">UK (+44)</option>
+        <option value="Canada">Canada (+1)</option>
+        <option value="India">India (+91)</option>
+    </select>
+
+    <button onclick="generate()">Generate</button>
     
-    <form method="POST">
-        <label for="country">Select Country:</label>
-        <select name="country">
-            <option value="Nigeria">Nigeria (+234)</option>
-            <option value="USA">USA (+1)</option>
-            <option value="UK">UK (+44)</option>
-            <option value="Canada">Canada (+1)</option>
-            <option value="India">India (+91)</option>
-        </select>
+    <div id="numberDisplay"></div>
+    <div id="emailDisplay"></div>
+    
+    <button onclick="loadInbox()">Inbox</button>
+    <div id="inboxMessages" class="hidden"></div>
+</div>
 
-        <button type="submit">Generate</button>
-    </form>
+<script>
+function generate() {
+    const country = document.getElementById("country").value;
+    fetch(`/generate?country=${country}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("numberDisplay").innerHTML = `<h3>Temp Number:</h3><p>${data.phone}</p>`;
+            document.getElementById("emailDisplay").innerHTML = `<h3>Temp Email:</h3><p>${data.email}</p>`;
+        })
+        .catch(console.error);
+}
 
-    {% if email and phone %}
-    <div>
-        <h2>Your Temporary Info</h2>
-        <p>Email: {{ email }}</p>
-        <p>Phone: {{ phone }}</p>
-    </div>
-    {% endif %}
+function loadInbox() {
+    fetch("/inbox")
+        .then(res => res.json())
+        .then(data => {
+            const inboxDiv = document.getElementById("inboxMessages");
+            inboxDiv.classList.remove("hidden");
+            inboxDiv.innerHTML = `<h3>Inbox Messages</h3>`;
+            data.messages.forEach(msg => {
+                inboxDiv.innerHTML += `<p><strong>Message:</strong> ${msg}</p><hr>`;
+            });
+        })
+        .catch(console.error);
+}
+</script>
 
-    <a href="/inbox">Check Inbox</a>
 </body>
 </html>
