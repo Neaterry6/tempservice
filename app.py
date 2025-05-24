@@ -62,7 +62,7 @@ def generate_email():
     temp_email = get_temp_email()
     return jsonify({"email": temp_email})
 
-@app.route("/=["GET"])
+@app.route("/email_inbox", methods=["GET"])
 def check_email_inbox():
     """Fetch inbox messages from TempMail API."""
     if "user" not in session:
