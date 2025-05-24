@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,29 +9,36 @@
 </head>
 <body>
 
-<h1>Free Temp Number & Email Service</h1>
-
-<div class="container">
-    <h2>Generate a Temporary Phone Number</h2>
-    <button onclick="generateNumber()">Generate Number</button>
-    <div id="numberDisplay"></div>
+{% if session.get("user") %}
+    <h1>Welcome, {{ session.get("user") }}!</h1>
+    <a href="/logout">Logout</a>
     
-    <br>
-    <button onclick="loadSmsInbox()">📩 Check SMS Inbox</button>
-    <div id="smsInbox" class="hidden"></div>
-</div>
+    <div class="container">
+        <h2>Generate a Temporary Phone Number</h2>
+        <button onclick="generateNumber()">Generate Number</button>
+        <div id="numberDisplay"></div>
+        
+        <br>
+        <button onclick="loadSmsInbox()">📩 Check SMS Inbox</button>
+        <div id="smsInbox" class="hidden"></div>
+    </div>
 
-<hr>
+    <hr>
 
-<div class="container">
-    <h2>Generate a Temporary Email</h2>
-    <button onclick="generateEmail()">Generate Email</button>
-    <div id="emailDisplay"></div>
+    <div class="container">
+        <h2>Generate a Temporary Email</h2>
+        <button onclick="generateEmail()">Generate Email</button>
+        <div id="emailDisplay"></div>
 
-    <br>
-    <button onclick="loadEmailInbox()">📩 Check Email Inbox</button>
-    <div id="emailInbox" class="hidden"></div>
-</div>
+        <br>
+        <button onclick="loadEmailInbox()">📩 Check Email Inbox</button>
+        <div id="emailInbox" class="hidden"></div>
+    </div>
+
+{% else %}
+    <h1>Welcome to Temp Services</h1>
+    <p>Please <a href="/login">Login</a> or <a href="/signup">Sign Up</a> to use the service.</p>
+{% endif %}
 
 <script>
 function generateNumber() {
@@ -93,4 +101,4 @@ function loadEmailInbox() {
 </script>
 
 </body>
-</html> 
+</html>
