@@ -1,1 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Temp Email & Number Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Your Temporary Email & Phone Number</h1>
+    <p>Email: {{ email }}</p>
+    <p>Phone Number: {{ phone }}</p>
 
+    <h2>Send a Message</h2>
+    <form method="POST" action="/send">
+        <input type="text" name="message" placeholder="Enter message">
+        <button type="submit">Send</button>
+    </form>
+
+    <br>
+    <a href="/inbox">Check Inbox</a>
+</body>
+</html>
